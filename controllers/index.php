@@ -19,4 +19,7 @@ $db = Database::DB();
 $manager = new AccountManager($db);
 
 
+
+$accounts = $manager->getAccounts();
+
 include "../views/indexView.php";

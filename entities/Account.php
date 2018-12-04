@@ -94,4 +94,18 @@ class Account
 
         return $this;
     }
+
+    public function addBalance(int $sum){
+        $newBalance = $this->getBalance() + $sum;
+        $this->setBalance($newBalance);
+    }
+    public function removeBalance(int $sum){
+        $newBalance = $this->getBalance() - $sum;
+        $this->setBalance($newBalance);
+    }
+
+    public function accountTransfer(Account $account, int $sum){
+        $this->removeBalance($sum);
+        $account->addBalance($sum);
+    }
 }
