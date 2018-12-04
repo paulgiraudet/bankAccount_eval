@@ -41,7 +41,7 @@ class AccountManager
         
         $arrayOfAccounts = [];
 
-        $query = $this->getDb()->query('SELECT * FROM accounts ORDER BY balance');
+        $query = $this->getDb()->query('SELECT * FROM accounts');
         $dataAccounts = $query->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($dataAccounts as $dataAccount) {
@@ -81,12 +81,13 @@ class AccountManager
      * @param [type] $account
      * @return void
      */
-    public function add($account)
+    public function add(Account $account)
     {
         $query = $this->getDb()->prepare('INSERT INTO accounts(name, balance) VALUES (:name, :balance)');
         $query->bindValue('name', $account->getName(), PDO::PARAM_STR);
         $query->bindValue('balance', $account->getBalance(), PDO::PARAM_STR);
-
+        var_dump($account->getName());
+        var_dump($account->getBalance());
         $query->execute();
 
         $id = $this->getDb()->lastInsertId();

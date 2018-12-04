@@ -50,6 +50,7 @@ class Account
      */ 
     public function setId($id)
     {
+        $id = (int) $id;
         $this->id = $id;
 
         return $this;
@@ -68,7 +69,7 @@ class Account
      *
      * @return  self
      */ 
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -90,6 +91,7 @@ class Account
      */ 
     public function setBalance($balance)
     {
+        $balance = (int) $balance;
         $this->balance = $balance;
 
         return $this;
