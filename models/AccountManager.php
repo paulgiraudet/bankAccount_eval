@@ -23,7 +23,7 @@ class AccountManager
      *
      * @return  self
      */ 
-    public function setDb($_db)
+    public function setDb(PDO $_db)
     {
         $this->_db = $_db;
 
@@ -85,9 +85,7 @@ class AccountManager
     {
         $query = $this->getDb()->prepare('INSERT INTO accounts(name, balance) VALUES (:name, :balance)');
         $query->bindValue('name', $account->getName(), PDO::PARAM_STR);
-        $query->bindValue('balance', $account->getBalance(), PDO::PARAM_STR);
-        var_dump($account->getName());
-        var_dump($account->getBalance());
+        $query->bindValue('balance', $account->getBalance(), PDO::PARAM_INT);
         $query->execute();
 
         $id = $this->getDb()->lastInsertId();

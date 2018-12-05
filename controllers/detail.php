@@ -14,9 +14,18 @@ function chargerClasse($classname)
 }
 spl_autoload_register('chargerClasse');
 
+session_start();
+
 $db = Database::DB();
 
 $manager = new AccountManager($db);
+
+if (!isset($_SESSION['user'])) {
+    header('Location: index.php');
+}
+else {
+    $user = $_SESSION['user'];
+}
 
 if (isset($_POST['new'])) {
     $name = htmlspecialchars($_POST['name']);
