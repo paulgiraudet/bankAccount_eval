@@ -10,87 +10,57 @@ include('includes/header.php');
 		<p class="margin-right">Bienvenue sur l'application Comptes Bancaires</p>
 	</header>
 
-	<h1>Mon application bancaire</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 mx-auto indexform borderFormRight pr-5">
 
-	<form class="newAccount" action="index.php" method="post">
-		<label>Sélectionner un type de compte</label>
-		<select class="" name="name" required>
-			<option value="" disabled>Choisissez le type de compte à ouvrir</option>
-			<option value="Compte courant">Compte courant</option>
-			<option value="PEL">PEL</option>
-			<option value="Livret A">Livret A</option>
-			<option value="Compte joint">Compte joint</option>
-			
-		</select>
-		<input type="submit" name="new" value="Ouvrir un nouveau compte">
-	</form>
+			<h3 class="mt-5">Inscription</h3>
 
-	<hr>
+			<!-- inscriptionForm -->
 
-	<div class="main-content flex">
-
-	<!-- Pour chaque compte enregistré en base de données, il faudra générer le code ci-dessous -->
-
-	<?php foreach ($accounts as $account) {
-		?>
-
-		<div class="card-container">
-			
-			<div class="card">
-				<h3><strong><?php echo $account->getName(); ?></strong></h3>
-				<div class="card-content">
-					
-					
-					<p>Somme disponible : <?php echo $account->getBalance(); ?> €</p>
-					
-					<!-- Formulaire pour dépot/retrait -->
-					<h4>Dépot / Retrait</h4>
-					<form action="index.php" method="post">
-						<input type="hidden" name="id" value=" <?php echo $account->getId(); ?>"  required>
-						<label>Entrer une somme à débiter/créditer</label>
-						<input type="number" name="balance" placeholder="Ex: 250" required>
-						<input type="submit" name="payment" value="Créditer">
-						<input type="submit" name="debit" value="Débiter">
-					</form>
-					
-					
-					<!-- Formulaire pour virement -->
-					<form action="index.php" method="post">
-						
-						<h4>Transfert</h4>
-						<label>Entrer une somme à transférer</label>
-						<input type="number" name="balance" placeholder="Ex: 300"  required>
-						<input type="hidden" name="idDebit" value="<?php echo $account->getId();?>" required>
-						<label for="">Sélectionner un compte pour le virement</label>
-						<select name="idPayment" required>
-							<option value="" disabled>Choisir un compte</option>
-							<?php 
-							foreach ($accounts as $accountTransfer) {
-								if ($accountTransfer->getName() != $account->getName()) {
-									?>
-									<option value="<?php echo $accountTransfer->getName(); ?>"><?= $accountTransfer->getName(); ?></option>
-									<?php
-								}
-							}
-							?>
-						</select>
-						<input type="submit" name="transfer" value="Transférer l'argent">
-					</form>
-					
-					<!-- Formulaire pour suppression -->
-					<form class="delete" action="index.php" method="post">
-						<input type="hidden" name="id" value="<?php echo $account->getId(); ?>"  required>
-						<input type="submit" name="delete" value="Supprimer le compte">
-					</form>
-					
+				<form method="post" action="index.php" class="my-5 connexion">
+				<div class="form-group">
+					<label for="exampleInputName">Prénom</label>
+					<input type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Entrez votre prénom" name="name" required>
 				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Mot de passe</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" name="password" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword2">Mot de passe (vérification)</label>
+					<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Vérifiez votre mot de passe" name="passwordbis" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Email</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" name="email" required>
+					<small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre email avec qui que ce soit</small>
+				</div>
+				<input type="submit" name="addUser" class="" value="Inscription">
+				</form>
+
+			</div>
+			<div class="col-md-6 mx-auto indexform d-flex flex-column borderFormLeft pl-5">
+
+			<h3 class="mt-5">Connexion</h3>
+
+		<!-- connectionForm -->
+		
+			<form method="post" action="index.php" class="mt-5 connexion">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Email</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" name="email" required>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Mot de passe</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" name="password" required>
+				</div>
+				<input type="submit" name="connectUser" class="" value="Connexion">
+			</form>
+
 			</div>
 		</div>
-		
-	<?php } ?>
-		
 	</div>
-	
 </div>
 
 <?php
