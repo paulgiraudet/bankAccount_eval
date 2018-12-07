@@ -36,18 +36,20 @@ class AccountManager
      *
      * @return array $arrayOfAccounts
      */
-    public function getAccounts()
+    public function getAccounts(int $idUser)
     {
         
         $arrayOfAccounts = [];
 
-        $query = $this->getDb()->query('SELECT * FROM accounts');
-        $dataAccounts = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->getDb()->prepare('SELECT * FROM accounts WHERE id_user = :iduser');
+        $query->bindValue('iduser', $idUser, PDO::PARAM_INT);
+        $query->execute();
 
-        foreach ($dataAccounts as $dataAccount) {
+        while ($dataAccount = $query->fetch(PDO::FETCH_ASSOC))
+        {
             $arrayOfAccounts[] = new Account($dataAccount);
         }
-
+        
         return $arrayOfAccounts;
     }
 
@@ -83,9 +85,11 @@ class AccountManager
      */
     public function add(Account $account)
     {
-        $query = $this->getDb()->prepare('INSERT INTO accounts(name, balance) VALUES (:name, :balance)');
+        $query = $this->getDb()->prepare('INSERT INTO accounts(name, balance, firstBalance, id_user) VALUES (:name, :balance, :firstBalance, :iduser)');
         $query->bindValue('name', $account->getName(), PDO::PARAM_STR);
         $query->bindValue('balance', $account->getBalance(), PDO::PARAM_INT);
+        $query->bindValue('iduser', $account->getId_user(), PDO::PARAM_INT);
+        $query->bindValue('firstBalance', $account->getFirstBalance(), PDO::PARAM_INT);
         $query->execute();
 
         $id = $this->getDb()->lastInsertId();
@@ -113,8 +117,9 @@ class AccountManager
      */
     public function update($account)
     {
-        $query = $this->getDb()->prepare('UPDATE accounts SET balance = :balance WHERE id = :id');
+        $query = $this->getDb()->prepare('UPDATE accounts SET balance = :balance, firstBalance = :firstBalance WHERE id = :id');
         $query->bindValue('balance', $account->getBalance(), PDO::PARAM_INT);
+        $query->bindValue('firstBalance', $account->getFirstBalance(), PDO::PARAM_INT);
         $query->bindValue('id', $account->getId(), PDO::PARAM_INT);
         $query->execute();
     }

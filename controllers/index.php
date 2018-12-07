@@ -18,6 +18,7 @@ $db = Database::DB();
 
 $manager = new UserManager($db);
 
+$message = false;
 
 if (isset($_POST['addUser'])) {
 
@@ -49,7 +50,7 @@ if (isset($_POST['addUser'])) {
                         $user = new User ([
                             "name" => $name,
                             "email" => $email,
-                            "password" => $password
+                            "password" => $pass_hache
                         ]);
                         $manager->add($user);
 
@@ -75,16 +76,14 @@ if (isset($_POST['connectUser'])) {
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
     
-    $user = $manager->getUser($email);
-
-    // Compare dbPassword and postPassword
-    $isPasswordCorrect = password_verify($password, $user->getPassword());
-  
     // checking isset email
-    if (!$user) {
+    if (!$manager->checkIfExist($email)) {
         $message = "Mauvais identifiant ou mot de passe !";
     }
     else {
+        $user = $manager->getUser($email);
+        // Compare dbPassword and postPassword
+        $isPasswordCorrect = password_verify($password, $user->getPassword());
         if ($isPasswordCorrect) {
             session_start();
             $_SESSION['user'] = $user;

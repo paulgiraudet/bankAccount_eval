@@ -6,7 +6,9 @@ class Account
 {
     protected   $id,
                 $name,
-                $balance;
+                $balance,
+                $firstBalance,
+                $id_user;
     
     public function __construct(array $array){
         $this->hydrate($array);
@@ -85,6 +87,26 @@ class Account
     }
 
     /**
+     * Get the value of id_user
+     */ 
+    public function getId_user()
+    {
+        return $this->id_user;
+    }
+
+    /**
+     * Set the value of id_user
+     *
+     * @return  self
+     */ 
+    public function setId_user($id_user)
+    {
+        $this->id_user = $id_user;
+
+        return $this;
+    }
+
+    /**
      * Set the value of balance
      *
      * @return  self
@@ -93,6 +115,26 @@ class Account
     {
         $balance = (int) $balance;
         $this->balance = $balance;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of firstBalance
+     */ 
+    public function getFirstBalance()
+    {
+        return $this->firstBalance;
+    }
+
+    /**
+     * Set the value of firstBalance
+     *
+     * @return  self
+     */ 
+    public function setFirstBalance($firstBalance)
+    {
+        $this->firstBalance = $firstBalance;
 
         return $this;
     }
@@ -106,8 +148,9 @@ class Account
         $this->setBalance($newBalance);
     }
 
-    public function accountTransfer(Account $account, int $sum){
+    public function accountTransfer(Account $account, int $sum, int $newSum){
         $this->removeBalance($sum);
-        $account->addBalance($sum);
+        $account->addBalance($newSum);
     }
+
 }

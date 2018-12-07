@@ -11,6 +11,9 @@ include('includes/header.php');
 	</header>
 
 	<div class="container">
+		<?php if ($message) { ?>
+			<p class="text-center"><?= $message ?></p>
+		<?php } ?>
 		<div class="row">
 			<div class="col-md-6 mx-auto indexform borderFormRight pr-5">
 
@@ -29,14 +32,14 @@ include('includes/header.php');
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword2">Mot de passe (vérification)</label>
-					<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Vérifiez votre mot de passe" name="passwordbis" required>
+					<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Entrez à nouveau votre mot de passe" name="passwordbis" required>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputEmail1">Email</label>
 					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" name="email" required>
 					<small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre email avec qui que ce soit</small>
 				</div>
-				<input type="submit" name="addUser" class="" value="Inscription">
+				<input type="submit" name="addUser" value="Inscription">
 				</form>
 
 			</div>
@@ -55,7 +58,7 @@ include('includes/header.php');
 					<label for="exampleInputPassword1">Mot de passe</label>
 					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" name="password" required>
 				</div>
-				<input type="submit" name="connectUser" class="" value="Connexion">
+				<input type="submit" name="connectUser" value="Connexion">
 			</form>
 
 			</div>

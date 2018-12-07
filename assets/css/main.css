@@ -56,9 +56,16 @@ hr{
 }
 
 .card{
-	border: 2px solid salmon;
 	margin: 15px;
 	border-radius: 5px;
+}
+
+.card-border{
+	border: 2px solid salmon;
+}
+
+.card-border-danger{
+	border: 5px solid red;
 }
 
 .card-container{
@@ -84,8 +91,7 @@ hr{
 	margin-top: 30px!important;
 }
 
-.delete input{
-	width: 52%;
+.delete input, .disconnection input{
 	display: block;
 	margin: auto!important;
 	background: salmon;
@@ -93,7 +99,17 @@ hr{
 	border: 0;
 }
 
+.delete input{
+	width: 52%;
+}
 
+.disconnection input{
+	width: 30%;
+}
+
+input[type=submit]:hover{
+	cursor:pointer;
+}
 
 .alert{
 	color: red;

@@ -80,7 +80,7 @@ class UserManager
      */
     public function add(User $user)
     {
-        $query = $this->getDb()->prepare('INSERT INTO members(name, email, password) VALUES (:name, :email, :password)');
+        $query = $this->getDb()->prepare('INSERT INTO members(name, email, password) VALUES(:name, :email, :password)');
         $query->bindValue('name', $user->getName(), PDO::PARAM_STR);
         $query->bindValue('email', $user->getEmail(), PDO::PARAM_STR);
         $query->bindValue('password', $user->getPassword(), PDO::PARAM_STR);

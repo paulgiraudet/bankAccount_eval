@@ -7,12 +7,15 @@ include('includes/header.php');
 <div class="container">
 
 	<header class="flex">
-		<p class="margin-right">Bienvenue sur l'application Comptes Bancaires</p>
+		<p class="margin-right">Bienvenue sur l'application Comptes Bancaires <?= $user->getName() ?></p>
 	</header>
 
 	<h1>Mon application bancaire</h1>
+	<?php if ($message) { ?>
+		<p class="text-center bg-danger text-white"><?= $message ?></p>
+	<?php } ?>
 
-	<form class="newAccount" action="index.php" method="post">
+	<form class="newAccount" action="detail.php" method="post">
 		<label>Sélectionner un type de compte</label>
 		<select class="" name="name" required>
 			<option value="" disabled>Choisissez le type de compte à ouvrir</option>
@@ -36,16 +39,26 @@ include('includes/header.php');
 
 		<div class="card-container">
 			
-			<div class="card">
+			<div class="card <?php 
+			if ($account->getBalance() >= 0) { ?>
+				card-border
+			<?php }
+			else{ ?>
+				card-border-danger
+			<?php } ?>
+			r">
 				<h3><strong><?php echo $account->getName(); ?></strong></h3>
 				<div class="card-content">
 					
 					
 					<p>Somme disponible : <?php echo $account->getBalance(); ?> €</p>
+					<?php if ($account->getBalance() < 0) { ?>
+						<small>Attention vous êtes à découvert, vous devriez arrêter de retirer de l'argent de ce compte</small>
+					<?php } ?>
 					
 					<!-- Formulaire pour dépot/retrait -->
 					<h4>Dépot / Retrait</h4>
-					<form action="index.php" method="post">
+					<form action="detail.php" method="post">
 						<input type="hidden" name="id" value=" <?php echo $account->getId(); ?>"  required>
 						<label>Entrer une somme à débiter/créditer</label>
 						<input type="number" name="balance" placeholder="Ex: 250" required>
@@ -55,7 +68,7 @@ include('includes/header.php');
 					
 					
 					<!-- Formulaire pour virement -->
-					<form action="index.php" method="post">
+					<form action="detail.php" method="post">
 						
 						<h4>Transfert</h4>
 						<label>Entrer une somme à transférer</label>
@@ -68,7 +81,7 @@ include('includes/header.php');
 							foreach ($accounts as $accountTransfer) {
 								if ($accountTransfer->getName() != $account->getName()) {
 									?>
-									<option value="<?php echo $accountTransfer->getName(); ?>"><?= $accountTransfer->getName(); ?></option>
+									<option value="<?php echo $accountTransfer->getId(); ?>"><?= $accountTransfer->getName(); ?></option>
 									<?php
 								}
 							}
@@ -78,7 +91,7 @@ include('includes/header.php');
 					</form>
 					
 					<!-- Formulaire pour suppression -->
-					<form class="delete" action="index.php" method="post">
+					<form class="delete" action="detail.php" method="post">
 						<input type="hidden" name="id" value="<?php echo $account->getId(); ?>"  required>
 						<input type="submit" name="delete" value="Supprimer le compte">
 					</form>
@@ -90,7 +103,12 @@ include('includes/header.php');
 	<?php } ?>
 		
 	</div>
-	
+
+	<hr>
+
+	<form class="disconnection m-4" action="detail.php" method="post">
+		<input type="submit" class="p-2" name="disconnection" value="Deconnexion">
+	</form>
 </div>
 
 <?php
