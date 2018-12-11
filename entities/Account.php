@@ -10,6 +10,11 @@ class Account
                 $firstBalance,
                 $id_user;
     
+    /**
+     * account construct using hydrate function
+     *
+     * @param array $array
+     */            
     public function __construct(array $array){
         $this->hydrate($array);
     }
@@ -17,11 +22,11 @@ class Account
     /**
      * Hydratation
      *
-     * @param array $donnees
+     * @param array $data
      */
-    public function hydrate(array $donnees)
+    public function hydrate(array $data)
     {
-        foreach ($donnees as $key => $value)
+        foreach ($data as $key => $value)
         {
             // On récupère le nom du setter correspondant à l'attribut.
             $method = 'set'.ucfirst($key);
@@ -101,6 +106,7 @@ class Account
      */ 
     public function setId_user($id_user)
     {
+        $id_user = (int) $id_user;
         $this->id_user = $id_user;
 
         return $this;
@@ -134,20 +140,43 @@ class Account
      */ 
     public function setFirstBalance($firstBalance)
     {
+        $firstBalance = (int) $firstBalance;
         $this->firstBalance = $firstBalance;
 
         return $this;
     }
 
+    /**
+     * method used for add balance from the actual balance
+     *
+     * @param integer $sum
+     * @return void
+     */
     public function addBalance(int $sum){
         $newBalance = $this->getBalance() + $sum;
         $this->setBalance($newBalance);
     }
+
+    /**
+     * method used for remove balance from the actual balance
+     *
+     * @param integer $sum
+     * @return void
+     */
     public function removeBalance(int $sum){
         $newBalance = $this->getBalance() - $sum;
         $this->setBalance($newBalance);
     }
 
+    /**
+     * method used for transfer balance from one account to another
+     * it use both previous method (addBalance and removeBalance)
+     *
+     * @param Account $account
+     * @param integer $sum
+     * @param integer $newSum
+     * @return void
+     */
     public function accountTransfer(Account $account, int $sum, int $newSum){
         $this->removeBalance($sum);
         $account->addBalance($newSum);

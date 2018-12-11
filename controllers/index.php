@@ -1,6 +1,6 @@
 <?php
 
-// On enregistre notre autoload.
+// Saving our autoload
 function chargerClasse($classname)
 {
     if(file_exists('../models/'. $classname.'.php'))
@@ -54,6 +54,7 @@ if (isset($_POST['addUser'])) {
                         ]);
                         $manager->add($user);
 
+//from here we save different messages for the user 
                         $message = "Vous avez bien été inscrit.";
                     }
                     else {
@@ -84,6 +85,7 @@ if (isset($_POST['connectUser'])) {
         $user = $manager->getUser($email);
         // Compare dbPassword and postPassword
         $isPasswordCorrect = password_verify($password, $user->getPassword());
+        //if everything is okay we can connect the user and redirect him to his main account page
         if ($isPasswordCorrect) {
             session_start();
             $_SESSION['user'] = $user;
@@ -93,6 +95,6 @@ if (isset($_POST['connectUser'])) {
             $message = "Mauvais identifiant ou mot de passe !";
         }
     }
-}
+} //end of isset($_POST['connectUser'])
 
 include "../views/indexView.php";

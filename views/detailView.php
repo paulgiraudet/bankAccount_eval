@@ -32,13 +32,14 @@ include('includes/header.php');
 
 	<div class="main-content flex">
 
-	<!-- Pour chaque compte enregistré en base de données, il faudra générer le code ci-dessous -->
+	<!-- For each account in our database we display different informations about it -->
 
 	<?php foreach ($accounts as $account) {
 		?>
 
 		<div class="card-container">
 			
+			<!-- we use a particular className for the card to show to the user if his balance is negative or not -->
 			<div class="card <?php 
 			if ($account->getBalance() >= 0) { ?>
 				card-border
@@ -56,7 +57,7 @@ include('includes/header.php');
 						<small>Attention vous êtes à découvert, vous devriez arrêter de retirer de l'argent de ce compte</small>
 					<?php } ?>
 					
-					<!-- Formulaire pour dépot/retrait -->
+					<!-- add and remove balance form -->
 					<h4>Dépot / Retrait</h4>
 					<form action="detail.php" method="post">
 						<input type="hidden" name="id" value=" <?php echo $account->getId(); ?>"  required>
@@ -67,7 +68,7 @@ include('includes/header.php');
 					</form>
 					
 					
-					<!-- Formulaire pour virement -->
+					<!-- transfer form -->
 					<form action="detail.php" method="post">
 						
 						<h4>Transfert</h4>
@@ -77,6 +78,8 @@ include('includes/header.php');
 						<label for="">Sélectionner un compte pour le virement</label>
 						<select name="idPayment" required>
 							<option value="" disabled>Choisir un compte</option>
+
+							<!-- this foreach permit us to display all accounts name except the one in which we are -->
 							<?php 
 							foreach ($accounts as $accountTransfer) {
 								if ($accountTransfer->getName() != $account->getName()) {
@@ -90,7 +93,7 @@ include('includes/header.php');
 						<input type="submit" name="transfer" value="Transférer l'argent">
 					</form>
 					
-					<!-- Formulaire pour suppression -->
+					<!-- Delete form -->
 					<form class="delete" action="detail.php" method="post">
 						<input type="hidden" name="id" value="<?php echo $account->getId(); ?>"  required>
 						<input type="submit" name="delete" value="Supprimer le compte">

@@ -6,6 +6,11 @@ class AccountManager
 {
     private $_db;
 
+    /**
+     * AccountManager construct using single setter
+     *
+     * @param array $array
+     */  
     public function __construct(PDO $db){
         $this->setDb($db);
     }
@@ -31,10 +36,11 @@ class AccountManager
     }
 
 
-        /**
-     * List all accounts
+    /**
+     * List all accounts in an array
      *
-     * @return array $arrayOfAccounts
+     * @param integer $idUser
+     * @return array
      */
     public function getAccounts(int $idUser)
     {
@@ -53,6 +59,12 @@ class AccountManager
         return $arrayOfAccounts;
     }
 
+    /**
+     * getting a single account from a name or an id
+     *
+     * @param [type] $info
+     * @return Account
+     */
     public function getAccount($info)
     {
         // get by name
@@ -80,7 +92,7 @@ class AccountManager
     /**
      * Add particular account into DB
      *
-     * @param [type] $account
+     * @param Account $account
      * @return void
      */
     public function add(Account $account)
@@ -101,9 +113,10 @@ class AccountManager
     /**
      * Delete account from DB
      *
-     * @param [type] $account
+     * @param Account $account
+     * @return void
      */
-    public function delete($account)
+    public function delete(Account $account)
     {
         $query = $this->getDb()->prepare('DELETE FROM accounts WHERE id = :id');
         $query->bindValue('id', $account->getId(), PDO::PARAM_INT);
@@ -113,9 +126,10 @@ class AccountManager
     /**
      * Update account's data 
      *
-     * @param [type] $account
+     * @param Account $account
+     * @return void
      */
-    public function update($account)
+    public function update(Account $account)
     {
         $query = $this->getDb()->prepare('UPDATE accounts SET balance = :balance, firstBalance = :firstBalance WHERE id = :id');
         $query->bindValue('balance', $account->getBalance(), PDO::PARAM_INT);

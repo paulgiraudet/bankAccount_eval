@@ -11,6 +11,7 @@ include('includes/header.php');
 	</header>
 
 	<div class="container">
+		<!-- displaying a particular message if there is an error with any form -->
 		<?php if ($message) { ?>
 			<p class="text-center"><?= $message ?></p>
 		<?php } ?>

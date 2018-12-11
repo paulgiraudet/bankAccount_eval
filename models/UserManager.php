@@ -6,6 +6,11 @@ class UserManager
 {
     private $_db;
 
+    /**
+     * UserManager construct using single setter
+     *
+     * @param array $array
+     */  
     public function __construct(PDO $db){
         $this->setDb($db);
     }
@@ -32,6 +37,12 @@ class UserManager
         return $this;
     }
 
+    /**
+     * checking if an user with a particular email exist in our database
+     *
+     * @param string $email
+     * @return boolean
+     */
     public function checkIfExist(string $email)
     {
         $query = $this->getDb()->prepare('SELECT * FROM members WHERE email = :email');
@@ -48,6 +59,12 @@ class UserManager
         return false;
     }
 
+    /**
+     * creating an User object with an email or an id if it exist in our database
+     *
+     * @param [type] $info
+     * @return User
+     */
     public function getUser($info)
     {
         // get by name
@@ -75,7 +92,7 @@ class UserManager
     /**
      * Add particular user into DB
      *
-     * @param [type] $user
+     * @param User $user
      * @return void
      */
     public function add(User $user)

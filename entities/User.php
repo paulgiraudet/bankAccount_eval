@@ -9,6 +9,12 @@ class User
                 $email,
                 $password;
 
+
+    /**
+     * user construct using hydrate function
+     *
+     * @param array $array
+     */  
     public function __construct(array $array){
         $this->hydrate($array);
     }
