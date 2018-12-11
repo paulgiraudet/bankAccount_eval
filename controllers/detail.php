@@ -61,8 +61,8 @@ if (isset($_POST['new'])) {
 if (isset($_POST['delete'])) {
     $id = (int) $_POST['id'];
     $account = $manager->getAccount($id);
+    $message = "Votre compte " . $account->getName() . " a bien été supprimé.";
     $manager->delete($account);
-    header('Location: detail.php');
 }
 
 if (isset($_POST['payment'])) {

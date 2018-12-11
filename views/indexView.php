@@ -24,7 +24,7 @@ include('includes/header.php');
 				<form method="post" action="index.php" class="my-5 connexion">
 				<div class="form-group">
 					<label for="exampleInputName">Prénom</label>
-					<input type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Entrez votre prénom" name="name" required>
+					<input type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Entrez votre prénom" name="name" autofocus required>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Mot de passe</label>
